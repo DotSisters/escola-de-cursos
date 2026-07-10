@@ -40,6 +40,40 @@ public class ServicoAluno : ServicoBase<Aluno>
         return Result.Ok();
     }
 
+    public Result Editar(EditarAlunoDto dto)
+    {
+        Aluno? aluno = repositorioAluno.SelecionarPorId(dto.Id);
+
+        if (aluno == null)
+            return Result.Fail("Aluno não encontrado.");
+
+        string cpfNormalizado = NormalizarCpf(dto.Cpf);
+        string emailNormalizado = NormalizarEmail(dto.Email);
+
+        if (ExisteAlunoComMesmoCpf(cpfNormalizado, dto.Id))
+            return Falha(nameof(dto.Cpf), "Já existe um aluno com esse CPF.");
+
+        if (ExisteAlunoComMesmoEmail(emailNormalizado, dto.Id))
+            return Falha(nameof(dto.Email), "Já existe um aluno com esse e-mail.");
+
+        Aluno alunoAtualizado = new Aluno(
+            dto.Nome,
+            cpfNormalizado,
+            dto.Telefone,
+            emailNormalizado,
+            dto.Endereco
+        );
+
+        Result resultadoValidacao = ValidarEntidade(alunoAtualizado);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioAluno.Editar(dto.Id, alunoAtualizado);
+
+        return Result.Ok();
+    }
+
     private string NormalizarCpf(string cpf)
     {
         return new string(cpf.Where(char.IsDigit).ToArray());
@@ -55,6 +89,11 @@ public class ServicoAluno : ServicoBase<Aluno>
                 a.Id != idIgnorado &&
                 NormalizarCpf(a.Cpf) == cpfNormalizado
             );
+    }
+
+    private string NormalizarEmail(string email)
+    {
+        return email.Trim().ToLower();
     }
 
     private bool ExisteAlunoComMesmoEmail(string email, Guid? idIgnorado = null)
@@ -80,5 +119,24 @@ public class ServicoAluno : ServicoBase<Aluno>
                 a.Endereco
             ))
             .ToList();
+    }
+
+    public Result<DetalhesAlunoDto> SelecionarPorId(Guid id)
+    {
+        Aluno? aluno = repositorioAluno.SelecionarPorId(id);
+
+        if (aluno == null)
+            return Result.Fail("Aluno não encontrado.");
+
+        return Result.Ok(
+            new DetalhesAlunoDto(
+                aluno.Id,
+                aluno.Nome,
+                aluno.Cpf,
+                aluno.Telefone,
+                aluno.Email,
+                aluno.Endereco
+            )
+        );
     }
 }

@@ -50,4 +50,41 @@ public class AlunoController(ServicoAluno servicoAluno, IMapper mapeador) : Cont
 
         return RedirectToAction(nameof(Listar));
     }
+
+    [HttpGet]
+    public ActionResult Editar(Guid id)
+    {
+        Result<DetalhesAlunoDto> resultado = servicoAluno.SelecionarPorId(id);
+
+        if (resultado.IsFailed)
+        {
+            TempData.AddErrorMessage(resultado);
+
+            return RedirectToAction(nameof(Listar));
+        }
+
+        EditarAlunoViewModel editarVm = mapeador.Map<EditarAlunoViewModel>(resultado.Value);
+
+        return View(editarVm);
+    }
+
+    [HttpPost]
+    public ActionResult Editar(EditarAlunoViewModel editarVm)
+    {
+        if (!ModelState.IsValid)
+            return View(editarVm);
+
+        EditarAlunoDto dto = mapeador.Map<EditarAlunoDto>(editarVm);
+
+        Result resultado = servicoAluno.Editar(dto);
+
+        if (resultado.IsFailed)
+        {
+            ModelState.AddModelError(resultado);
+
+            return View(editarVm);
+        }
+
+        return RedirectToAction(nameof(Listar));
+    }
 }
