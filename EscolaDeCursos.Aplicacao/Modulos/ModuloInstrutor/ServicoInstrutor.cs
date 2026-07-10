@@ -14,6 +14,31 @@ public class ServicoInstrutor : ServicoBase<Instrutor>
         this.repositorioInstrutor = repositorioInstrutor;
     }
 
+    public Result Cadastrar(CadastrarInstrutorDto dto)
+    {
+        if (ExisteInstrutorComMesmoCpf(dto.Cpf))
+            return Falha(nameof(dto.Cpf), "Já existe um instrutor com este CPF cadastrado.");
+
+        if (ExisteInstrutorComMesmoEmail(dto.Email))
+            return Falha(nameof(dto.Email), "Já existe um instrutor com este E-mail cadastrado.");
+
+        Instrutor novoInstrutor = new Instrutor(
+            dto.Nome,
+            dto.Cpf,
+            dto.Telefone,
+            dto.Email
+        );
+
+        Result resultadoValidacao = ValidarEntidade(novoInstrutor);
+
+        if (resultadoValidacao.IsFailed)
+            return resultadoValidacao;
+
+        repositorioInstrutor.Cadastrar(novoInstrutor);
+
+        return Result.Ok();
+    }
+
     private string NormalizarCpf(string cpf)
     {
         return new string(cpf.Where(char.IsDigit).ToArray());
@@ -40,9 +65,9 @@ public class ServicoInstrutor : ServicoBase<Instrutor>
     {
         return repositorioInstrutor
             .SelecionarTodos()
-            .Any(a =>
-                a.Id != idIgnorado &&
-                a.Email == email
+            .Any(i =>
+                i.Id != idIgnorado &&
+                i.Email == email
             );
     }
 

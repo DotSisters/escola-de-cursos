@@ -15,7 +15,7 @@ public class Instrutor : EntidadeBase<Instrutor>
     {
     }
 
-    public Instrutor(string nome, string cpf, string telefone, string email, string endereco)
+    public Instrutor(string nome, string cpf, string telefone, string email)
     {
         Nome = nome;
         Cpf = cpf;

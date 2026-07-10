@@ -8,6 +8,13 @@ public record ListarInstrutoresDto(
   string Email
 );
 
+public record CadastrarInstrutorDto(
+    string Nome,
+    string Cpf,
+    string Telefone,
+    string Email
+);
+
 public record DetalhesInstrutorDto(
     Guid Id,
     string Nome,
