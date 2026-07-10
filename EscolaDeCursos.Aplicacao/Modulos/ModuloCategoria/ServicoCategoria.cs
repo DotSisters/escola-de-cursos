@@ -50,6 +50,21 @@ public class ServicoCategoria : ServicoBase<Categoria>
         return Result.Ok();
     }
 
+    public Result Excluir(Guid id)
+    {
+        Categoria? categoria = repositorioCategoria.SelecionarPorId(id);
+
+        if (categoria == null)
+            return Falha(string.Empty, "Categoria não encontrada.");
+
+        // if (PossuiCursosVinculados(id))
+        //     return Falha(string.Empty, "Não é possível excluir esta categoria, pois ela possui cursos vinculados.");
+
+        repositorioCategoria.Excluir(id);
+
+        return Result.Ok();
+    }
+
     public List<ListarCategoriasDto> SelecionarTodos()
     {
         return repositorioCategoria
@@ -83,6 +98,12 @@ public class ServicoCategoria : ServicoBase<Categoria>
             );
     }
 
+    // private bool PossuiDespesasVinculadas(Guid categoriaId)
+    // {
+    //     return repositorioCursos
+    //         .SelecionarTodos()
+    //         .Any(d => d.Categorias.Any(c => c.Id == categoriaId));
+    // }
     private static string NormalizarTitulo(string titulo)
     {
         return titulo.Trim().ToLowerInvariant();
