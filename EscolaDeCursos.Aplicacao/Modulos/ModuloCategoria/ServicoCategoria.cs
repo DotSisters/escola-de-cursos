@@ -1,16 +1,20 @@
 using EscolaDeCursos.Aplicacao.Compartilhado;
 using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
 using FluentResults;
 namespace EscolaDeCursos.Aplicacao.Modulos.ModuloCategoria;
 
 public class ServicoCategoria : ServicoBase<Categoria>
 {
     private readonly IRepositorioCategoria repositorioCategoria;
+    private readonly IRepositorioCurso repositorioCurso;
     public ServicoCategoria(
-        IRepositorioCategoria repositorioCategoria
+        IRepositorioCategoria repositorioCategoria,
+        IRepositorioCurso repositorioCurso
     )
     {
         this.repositorioCategoria = repositorioCategoria;
+        this.repositorioCurso = repositorioCurso;
     }
 
     public Result Cadastrar(CadastrarCategoriaDto dto)
@@ -57,8 +61,8 @@ public class ServicoCategoria : ServicoBase<Categoria>
         if (categoria == null)
             return Falha(string.Empty, "Categoria não encontrada.");
 
-        // if (PossuiCursosVinculados(id))
-        //     return Falha(string.Empty, "Não é possível excluir esta categoria, pois ela possui cursos vinculados.");
+        if (PossuiCursosVinculados(id))
+            return Falha(string.Empty, $"Não é possível excluir a categoria \"{categoria.Titulo}\", pois ela possui cursos vinculados.");
 
         repositorioCategoria.Excluir(id);
 
@@ -98,12 +102,13 @@ public class ServicoCategoria : ServicoBase<Categoria>
             );
     }
 
-    // private bool PossuiDespesasVinculadas(Guid categoriaId)
-    // {
-    //     return repositorioCursos
-    //         .SelecionarTodos()
-    //         .Any(d => d.Categorias.Any(c => c.Id == categoriaId));
-    // }
+    private bool PossuiCursosVinculados(Guid categoriaId)
+    {
+        return repositorioCurso
+            .SelecionarTodos()
+            .Any(curso => curso.CategoriaId == categoriaId);
+    }
+
     private static string NormalizarTitulo(string titulo)
     {
         return titulo.Trim().ToLowerInvariant();
