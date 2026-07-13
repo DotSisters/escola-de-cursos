@@ -2,14 +2,14 @@
 
 @{
   Layout = "_Layout";
-  ViewBag.Titulo = "📝 Editar Contato";
-  ViewBag.Info = "Atualize as informações para este contato.";
+  ViewBag.Titulo = "📝 Editar Curso";
+  ViewBag.Info = "Atualize as informações do curso selecionado.";
 }
 
 @model EditarCursoViewModel;
 
 <form class="card border-primary-subtle shadow-sm mx-auto p-4 bg-transparent" style="max-width: 620px;"
-      asp-action="Editar" asp-route-id="@Model.Id" method="post">
+  asp-action="Editar" asp-route-id="@Model.Id" method="post">
   <div class="mb-3">
     <label asp-for="Titulo" class="form-label fw-semibold text-primary text-uppercase small">Título</label>
     <input asp-for="Titulo" type="text" class="form-control">
