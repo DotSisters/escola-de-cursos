@@ -53,6 +53,10 @@ ViewBag.ActionBotao = "Cadastrar";
                     </dl>
 
                     <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
+                        <a asp-controller="Matricula" asp-action="Listar" asp-route-turmaId="@t.Id"
+                            class="btn btn-outline-dark" title="Detalhes">
+                            <i class="bi bi-people"></i> Detalhes
+                        </a>
                         <a asp-action="Editar" asp-route-id="@t.Id" class="btn btn-primary" title="Editar">
                             <i class="bi bi-pencil-square"></i>
                         </a>

@@ -1,0 +1,44 @@
+@using EscolaDeCursos.Dominio.Modulos.ModuloMatricula
+@{
+  Layout = "_Layout";
+  ViewBag.Titulo = "✏️ Editar Situação da Matrícula";
+  ViewBag.Info = "Altere a situação do aluno nesta turma.";
+}
+
+@model EditarMatriculaViewModel;
+
+<form class="card border-primary-subtle shadow-sm mx-auto p-4 bg-transparent" style="max-width: 620px;"
+      asp-action="Editar" method="post">
+  <input type="hidden" asp-for="Id" />
+  <input type="hidden" asp-for="TurmaId" />
+  <input type="hidden" asp-for="AlunoNome" />
+  <input type="hidden" asp-for="TurmaNome" />
+  <input type="hidden" asp-for="Data" />
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold text-primary text-uppercase small">Aluno</label>
+    <input type="text" class="form-control" value="@Model.AlunoNome" disabled>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold text-primary text-uppercase small">Turma</label>
+    <input type="text" class="form-control" value="@Model.TurmaNome" disabled>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold text-primary text-uppercase small">Data</label>
+    <input type="text" class="form-control" value="@Model.Data.ToString("dd/MM/yyyy")" disabled>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Situacao" class="form-label fw-semibold text-primary text-uppercase small">Situação</label>
+    <select asp-for="Situacao" asp-items="Html.GetEnumSelectList<SituacaoAluno>()" class="form-select"></select>
+    <span asp-validation-for="Situacao" class="text-danger small fw-semibold"></span>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <a class="btn btn-outline-secondary rounded-2 px-4"
+       asp-action="Listar" asp-route-turmaId="@Model.TurmaId">Voltar</a>
+    <button class="btn btn-primary rounded-2 px-4" type="submit">Confirmar</button>
+  </div>
+</form>
