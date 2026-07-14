@@ -1,17 +1,22 @@
+using EscolaDeCursos.Dominio.Modulos.ModuloCategoria;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso;
+using EscolaDeCursos.Dominio.Modulos.ModuloCurso.ModuloModulo;
 using EscolaDeCursos.Dominio.Modulos.ModuloAluno;
 using EscolaDeCursos.Dominio.Modulos.ModuloInstrutor;
 using EscolaDeCursos.Dominio.Modulos.ModuloTurma;
 using EscolaDeCursos.Infra.Compartilhado.Logging;
 using EscolaDeCursos.Infra.Compartilhado.Orm;
-using EscolaDeCursos.Infra.Modulos.ModuloAluno;
-using EscolaDeCursos.Infra.Modulos.ModuloInstrutor;
-using EscolaDeCursos.Infra.Modulos.ModuloTurma;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
-
+using EscolaDeCursos.Infra.Modulos.ModuloCurso.ModuloModulo;
+using EscolaDeCursos.Infra.Modulos.ModuloCurso;
+using EscolaDeCursos.Infra.Modulos.ModuloCategoria;
+using EscolaDeCursos.Infra.Modulos.ModuloAluno;
+using EscolaDeCursos.Infra.Modulos.ModuloInstrutor;
+using EscolaDeCursos.Infra.Modulos.ModuloTurma;
 namespace EscolaDeCursos.Infra;
 
 public static class InjecaoDependencia
@@ -46,6 +51,10 @@ public static class InjecaoDependencia
         opt.EnableRetryOnFailure(3);
     });
         });
+
+        services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
+        services.AddScoped<IRepositorioCurso, RepositorioCurso>();
+        services.AddScoped<IRepositorioModulo, RepositorioModulo>();
 
         services.AddScoped<IRepositorioAluno, RepositorioAluno>();
         services.AddScoped<IRepositorioInstrutor, RepositorioInstrutor>();
