@@ -40,9 +40,5 @@ public sealed class TurmaConfiguration : IEntityTypeConfiguration<Turma>
             .WithMany()
             .HasForeignKey("InstrutorId")
             .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasMany(t => t.Alunos)
-            .WithMany()
-            .UsingEntity(j => j.ToTable("TBTurmaAluno"));
     }
 }
