@@ -11,7 +11,7 @@
 }
 
 @* <div class="card border-primary-subtle rounded-2 shadow-sm mx-auto p-4 bg-transparent"> *@
-<form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4">
+<form method="get" asp-action="Listar" class="row g-2 align-items-end mb-4 mt-1">
 
   <div class="col-md-4">
     <label asp-for="CursoId" class="form-label fw-semibold text-secondary small">Curso</label>
@@ -27,11 +27,11 @@
     </select>
   </div>
   <div class="col-md-auto">
-    <button type="submit" class="btn btn-primary">Filtrar</button>
+    <button type="submit" class="btn btn-dark">Filtrar</button>
   </div>
 </form>
 
-@* <hr> *@
+<hr>
 
 @if (TempData["MensagemErro"] is string mensagemErro)
 {
@@ -50,7 +50,7 @@
 }
 else
 {
-  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-2 mt-2">
     @foreach (ListarAlunosViewModel a in Model.Alunos)
     {
       <div class="col">
@@ -77,8 +77,8 @@ else
               <dd class="col-8 mb-0 text-break">@a.Endereco</dd>
             </dl>
 
-            <div class="d-flex flex-wrap gap-2 mt-auto justify-content-end">
-              <a asp-action="editar" asp-route-id="@a.Id" class="btn btn-primary" title="Editar">
+            <div class="d-flex flex-wrap gap-2 mt-auto justify-content-start">
+              <a asp-action="editar" asp-route-id="@a.Id" class="btn btn-success" title="Editar">
                 <i class="bi bi-pencil-square"></i>
               </a>
               <a asp-action="excluir" asp-route-id="@a.Id" class="btn btn-danger" title="Excluir">
