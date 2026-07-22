@@ -34,8 +34,8 @@ public sealed class MatriculaConfiguration : IEntityTypeConfiguration<Matricula>
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
-        builder.HasIndex(m => new { m.AlunoId, m.TurmaId })
+        builder.HasIndex(m => new { m.UserId, m.AlunoId, m.TurmaId })
             .IsUnique()
-            .HasDatabaseName("UQ_TBMatricula_Aluno_Turma");
+            .HasDatabaseName("UQ_TBMatricula_UserId_Aluno_Turma");
     }
 }

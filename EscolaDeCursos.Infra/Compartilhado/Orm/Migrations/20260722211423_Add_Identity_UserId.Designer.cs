@@ -4,6 +4,7 @@ using EscolaDeCursos.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(EscolaDeCursosDbContext))]
-    partial class EscolaDeCursosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260722211423_Add_Identity_UserId")]
+    partial class Add_Identity_UserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,13 +61,13 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBAluno");
 
-                    b.HasIndex("UserId", "Cpf")
+                    b.HasIndex("Cpf")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBAluno_UserId_Cpf");
+                        .HasDatabaseName("UQ_TBAluno_Cpf");
 
-                    b.HasIndex("UserId", "Email")
+                    b.HasIndex("Email")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBAluno_UserId_Email");
+                        .HasDatabaseName("UQ_TBAluno_Email");
 
                     b.ToTable("TBAluno", (string)null);
                 });
@@ -85,9 +88,9 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBCategoria");
 
-                    b.HasIndex("UserId", "Titulo")
+                    b.HasIndex("Titulo")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBCategoria_UserId_Titulo");
+                        .HasDatabaseName("UQ_TBCategoria_Titulo");
 
                     b.ToTable("TBCategoria", (string)null);
                 });
@@ -124,9 +127,9 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("UserId", "Titulo")
+                    b.HasIndex("Titulo")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBCurso_UserId_Titulo");
+                        .HasDatabaseName("UQ_TBCurso_Titulo");
 
                     b.ToTable("TBCurso", (string)null);
                 });
@@ -161,11 +164,9 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBModulo");
 
-                    b.HasIndex("CursoId");
-
-                    b.HasIndex("UserId", "CursoId", "Ordem")
+                    b.HasIndex("CursoId", "Ordem")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBModulo_UserId_Curso_Ordem");
+                        .HasDatabaseName("UQ_TBModulo_Curso_Ordem");
 
                     b.ToTable("TBModulo", (string)null);
                 });
@@ -182,10 +183,6 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 
                     b.HasKey("UserId")
                         .HasName("PK_TBInstituicao");
-
-                    b.HasIndex("UserId", "Nome")
-                        .IsUnique()
-                        .HasDatabaseName("UQ_TBInstituicao_UserId_Nome");
 
                     b.ToTable("TBInstituicao", (string)null);
                 });
@@ -221,13 +218,13 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBInstrutor");
 
-                    b.HasIndex("UserId", "Cpf")
+                    b.HasIndex("Cpf")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBInstrutor_UserId_Cpf");
+                        .HasDatabaseName("UQ_TBInstrutor_Cpf");
 
-                    b.HasIndex("UserId", "Email")
+                    b.HasIndex("Email")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBInstrutor_UserId_Email");
+                        .HasDatabaseName("UQ_TBInstrutor_Email");
 
                     b.ToTable("TBInstrutor", (string)null);
                 });
@@ -255,13 +252,11 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBMatricula");
 
-                    b.HasIndex("AlunoId");
-
                     b.HasIndex("TurmaId");
 
-                    b.HasIndex("UserId", "AlunoId", "TurmaId")
+                    b.HasIndex("AlunoId", "TurmaId")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBMatricula_UserId_Aluno_Turma");
+                        .HasDatabaseName("UQ_TBMatricula_Aluno_Turma");
 
                     b.ToTable("TBMatricula", (string)null);
                 });
@@ -300,10 +295,6 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasIndex("CursoId");
 
                     b.HasIndex("InstrutorId");
-
-                    b.HasIndex("UserId", "Nome", "DataInicio", "DataTermino")
-                        .IsUnique()
-                        .HasDatabaseName("UQ_TBTurma_UserId_Nome_DataInicio_DataTermino");
 
                     b.ToTable("TBTurma", (string)null);
                 });

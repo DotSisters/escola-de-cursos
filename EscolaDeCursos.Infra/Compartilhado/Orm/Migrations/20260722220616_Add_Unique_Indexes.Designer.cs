@@ -4,6 +4,7 @@ using EscolaDeCursos.Infra.Compartilhado.Orm;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
 {
     [DbContext(typeof(EscolaDeCursosDbContext))]
-    partial class EscolaDeCursosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260722220616_Add_Unique_Indexes")]
+    partial class Add_Unique_Indexes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,13 +61,13 @@ namespace EscolaDeCursos.Infra.Compartilhado.Orm.Migrations
                     b.HasKey("Id")
                         .HasName("PK_TBAluno");
 
-                    b.HasIndex("UserId", "Cpf")
+                    b.HasIndex("Cpf")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBAluno_UserId_Cpf");
+                        .HasDatabaseName("UQ_TBAluno_Cpf");
 
-                    b.HasIndex("UserId", "Email")
+                    b.HasIndex("Email")
                         .IsUnique()
-                        .HasDatabaseName("UQ_TBAluno_UserId_Email");
+                        .HasDatabaseName("UQ_TBAluno_Email");
 
                     b.ToTable("TBAluno", (string)null);
                 });
