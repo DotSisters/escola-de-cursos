@@ -20,8 +20,8 @@ public sealed class CategoriaConfiguration : IEntityTypeConfiguration<Categoria>
             .HasMaxLength(100)
             .IsRequired();
 
-        builder.HasIndex(c => c.Titulo)
+        builder.HasIndex(c => new { c.UserId, c.Titulo })
             .IsUnique()
-            .HasDatabaseName("UQ_TBCategoria_Titulo");
+            .HasDatabaseName("UQ_TBCategoria_UserId_Titulo");
     }
 }

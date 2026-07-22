@@ -30,8 +30,8 @@ public sealed class ModuloConfiguration : IEntityTypeConfiguration<Modulo>
         builder.Property(m => m.Duracao)
             .IsRequired();
 
-        builder.HasIndex(m => new { m.CursoId, m.Ordem })
+        builder.HasIndex(m => new { m.UserId, m.CursoId, m.Ordem })
             .IsUnique()
-            .HasDatabaseName("UQ_TBModulo_Curso_Ordem");
+            .HasDatabaseName("UQ_TBModulo_UserId_Curso_Ordem");
     }
 }

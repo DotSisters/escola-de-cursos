@@ -30,9 +30,9 @@ public sealed class CursoConfiguration : IEntityTypeConfiguration<Curso>
         builder.Property(c => c.CargaHoraria)
             .IsRequired();
 
-        builder.HasIndex(c => c.Titulo)
+        builder.HasIndex(c => new { c.UserId, c.Titulo })
             .IsUnique()
-            .HasDatabaseName("UQ_TBCurso_Titulo");
+            .HasDatabaseName("UQ_TBCurso_UserId_Titulo");
 
         builder.HasOne(c => c.Categoria)
             .WithMany()

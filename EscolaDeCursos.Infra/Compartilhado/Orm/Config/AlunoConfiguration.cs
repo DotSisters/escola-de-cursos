@@ -36,13 +36,13 @@ public sealed class AlunoConfiguration : IEntityTypeConfiguration<Aluno>
             .HasMaxLength(100)
             .IsRequired();
 
-        builder.HasIndex(a => a.Cpf)
+        builder.HasIndex(a => new { a.UserId, a.Cpf })
             .IsUnique()
-            .HasDatabaseName("UQ_TBAluno_Cpf");
+            .HasDatabaseName("UQ_TBAluno_UserId_Cpf");
 
-        builder.HasIndex(a => a.Email)
+        builder.HasIndex(a => new { a.UserId, a.Email })
             .IsUnique()
-            .HasDatabaseName("UQ_TBAluno_Email");
+            .HasDatabaseName("UQ_TBAluno_UserId_Email");
     }
 
 }

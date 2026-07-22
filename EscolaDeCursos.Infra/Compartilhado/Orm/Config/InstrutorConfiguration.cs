@@ -32,13 +32,13 @@ public sealed class InstrutorConfiguration : IEntityTypeConfiguration<Instrutor>
             .HasMaxLength(100)
             .IsRequired();
 
-        builder.HasIndex(i => i.Cpf)
+        builder.HasIndex(i => new { i.UserId, i.Cpf })
             .IsUnique()
-            .HasDatabaseName("UQ_TBInstrutor_Cpf");
+            .HasDatabaseName("UQ_TBInstrutor_UserId_Cpf");
 
-        builder.HasIndex(i => i.Email)
+        builder.HasIndex(i => new { i.UserId, i.Email })
             .IsUnique()
-            .HasDatabaseName("UQ_TBInstrutor_Email");
+            .HasDatabaseName("UQ_TBInstrutor_UserId_Email");
     }
 
 }

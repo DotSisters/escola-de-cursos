@@ -40,5 +40,9 @@ public sealed class TurmaConfiguration : IEntityTypeConfiguration<Turma>
             .HasForeignKey("InstrutorId")
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
+
+        builder.HasIndex(t => new { t.UserId, t.Nome, t.DataInicio, t.DataTermino })
+            .IsUnique()
+            .HasDatabaseName("UQ_TBTurma_UserId_Nome_DataInicio_DataTermino");
     }
 }
